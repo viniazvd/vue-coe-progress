@@ -62,12 +62,12 @@ export default Vue.extend({
         console.log('handle abort')
       }
 
-      this.upload = progress(
-        'http://localhost:3000/',
-        this.file,
-        handleAbort,
-        handleProgress
-      )
+      this.upload = progress({
+        url: 'http://localhost:3000/',
+        file: this.file,
+        abortFn: handleAbort,
+        progress: handleProgress
+      })
     }
   }
 });

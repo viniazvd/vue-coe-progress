@@ -1,23 +1,25 @@
-type XMLEvent = (event: ProgressEvent) => void
-
-function progress (
+interface ProgressOptions {
   url: string,
   file: File,
-  abortFn: XMLEvent,
-  processFn: XMLEvent
-): XMLHttpRequest {
+  abortFn?: XMLEvent,
+  progress?: XMLEvent
+}
+
+type XMLEvent = (event: ProgressEvent) => void
+
+function progress (options: ProgressOptions): XMLHttpRequest {
   let req = new XMLHttpRequest();
 
-  req.upload.addEventListener('abort', abortFn, false);
-  req.upload.addEventListener('progress', processFn, false);
+  if (options.abortFn) req.upload.addEventListener('abort', options.abortFn, false);
+  if (options.progress) req.upload.addEventListener('progress', options.progress, false);
 
   req.onload = () => console.log('finish!');
   req.onerror = () => console.log('error!');
 
   let formData = new FormData();
-  formData.append('file', file!);
+  formData.append('file', options.file!);
 
-  req.open('post', url, true);
+  req.open('post', options.url, true);
   req.setRequestHeader("Content-type", "multipart/form-data");
   req.send(formData);
 
