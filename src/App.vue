@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <span v-if="progress">progress is: {{ progress }}</span>
+    <div v-if="upload && progress">
+      <span>progress is: {{ progress }}</span>
+      <button @click="abortUpload">abort</button>
+    </div>
+
     <form enctype="multipart/form-data" method="post" name="fileinfo">
       <input type="file" @change="setFile">
 
@@ -18,8 +22,9 @@ export default Vue.extend({
 
   data () {
     return {
-      file: null,
-      progress: 0
+      progress: 0,
+      file: null as File | null,
+      upload: null as XMLHttpRequest | null
     }
   },
 
@@ -30,6 +35,14 @@ export default Vue.extend({
       if (file && file.length) {
         this.file = (event.target as HTMLInputElement).files[0]
       }
+    },
+
+    abortUpload (): void {
+      this.upload.abort()
+
+      // reset
+      this.upload = null
+      this.progress = 0
     },
 
     submit (): void {
@@ -45,7 +58,16 @@ export default Vue.extend({
         if (percent === 100) return
       }
 
-      progress('http://localhost:3000/', this.file, handleProgress)
+      function handleAbort () {
+        console.log('handle abort')
+      }
+
+      this.upload = progress(
+        'http://localhost:3000/',
+        this.file,
+        handleAbort,
+        handleProgress
+      )
     }
   }
 });
