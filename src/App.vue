@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import progress from './progress'
 
 export default Vue.extend({
   name: 'app',
@@ -22,44 +23,29 @@ export default Vue.extend({
     }
   },
 
-  // mounted () {
-  //   window.addEventListener('progress', this.handleProcess);
-  // },
-
   methods: {
-    // handleProcess (event: any): void {
-    //   console.log(event);
-    // },
+    setFile (event: Event): void {
+      const file = (event.target as HTMLInputElement).files
 
-    setFile (event: any): void {
-      this.file = event.target.files[0];
+      if (file && file.length) {
+        this.file = (event.target as HTMLInputElement).files[0]
+      }
     },
 
     submit (): void {
-      let xhr = new XMLHttpRequest();
-      xhr.open('post', 'http://localhost:3000/');
-      xhr.setRequestHeader("Content-type", "multipart/form-data")
+      const self = this
 
-      xhr.onload = () => console.log('loading');
-      xhr.onerror = () => console.log('error!');
-
-      xhr.upload.addEventListener('progress', (event: any) => {
+      function handleProgress (event: ProgressEvent): void {
         if (!event.lengthComputable) return
 
         const percent = event.loaded / event.total * 100;
 
-        if (percent === 100) {
-          this.progress = 0
-          return
-        }
+        self.progress = percent
 
-        this.progress = percent
-      })
+        if (percent === 100) return
+      }
 
-      let formData = new FormData();
-      formData.append('file', this.file!);
-
-      xhr.send(formData);
+      progress('http://localhost:3000/', this.file, handleProgress)
     }
   }
 });
