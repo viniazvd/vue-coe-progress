@@ -33,3 +33,13 @@ export function captureErrors (req: XMLHttpRequest, options: IProgressOptions) {
     if (options && options.errorFn) options.errorFn(event)
   }
 }
+
+export function setHeaders (req: XMLHttpRequest, options: IProgressOptions) {
+  const headers = options.headers
+
+  if (headers) {
+    Object
+      .entries(headers)
+      .forEach(([ key, value ]) => req.setRequestHeader(key, value))
+  }
+}
