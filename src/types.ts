@@ -5,6 +5,11 @@ export type TypeEvents = {
   [key: string]: string;
 }
 
+export interface IMixinProps {
+  url: string,
+  headers: object
+}
+
 export interface IListenerOptions {
   fn: any,
   event: string,
@@ -15,10 +20,11 @@ export interface IListenerOptions {
 // TODO: remove any type on errorFn
 export interface IProgressOptions {
   url: string,
+  headers?: object,
   file: File | null,
   abortFn?: XMLEvent,
-  loadendFn?: XMLEvent,
   errorFn?: XMLEvent,
+  loadendFn?: XMLEvent,
   loadstartFn?: XMLEvent,
   progressFn?: XMLProgressEvent
 }
