@@ -5,10 +5,12 @@
       <button @click="$abortRequest">abort</button>
     </div>
 
-    <form enctype="multipart/form-data" method="post" name="fileinfo">
-      <input type="file" @change="setFile">
+    <span>hasError: {{ hasError }}</span>
 
-      <button @click.prevent="$submit">submit</button>
+    <form enctype="multipart/form-data" method="post" name="fileinfo">
+      <input type="file" multiple @change="setFile">
+
+      <button @click.prevent="$upload">submit</button>
     </form>
   </div>
 </template>
