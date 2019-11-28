@@ -24,11 +24,9 @@ export default Vue.extend({
 
   methods: {
     setFile (event: Event): void {
-      const file = (event.target as HTMLInputElement).files
+      const files = (event.target as HTMLInputElement).files
 
-      if (file && file.length) {
-        this.file = (event.target as HTMLInputElement).files[0]
-      }
+      if (files && files.length) this.file = files[0]
     }
   }
 });
