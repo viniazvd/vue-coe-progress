@@ -1,20 +1,13 @@
-interface ProgressOptions {
-  url: string,
-  file: File,
-  abortFn?: XMLEvent,
-  progress?: XMLEvent
-}
+import { IProgressOptions } from './types'
+import { registerListeners } from './utils'
 
-type XMLEvent = (event: ProgressEvent) => void
+function progress (options: IProgressOptions): XMLHttpRequest | null {
+  if (!options.file) return null;
 
-function progress (options: ProgressOptions): XMLHttpRequest {
   let req = new XMLHttpRequest();
 
-  if (options.abortFn) req.upload.addEventListener('abort', options.abortFn, false);
-  if (options.progress) req.upload.addEventListener('progress', options.progress, false);
-
-  req.onload = () => console.log('finish!');
-  req.onerror = () => console.log('error!');
+  // register event listeners
+  registerListeners(req, options);
 
   let formData = new FormData();
   formData.append('file', options.file!);
