@@ -16,12 +16,20 @@ function registerListener (options: IListenerOptions): void {
 
 export function registerListeners (req: XMLHttpRequest, options: IProgressOptions): void {
   Object
-    .keys(EVENTS)
-    .forEach(event => {
-      const eventName = EVENTS[event]
-      const fn = (options as any)[eventName]
-      const once = event !== 'progress'
+  .keys(EVENTS)
+  .forEach(event => {
+    const eventName = EVENTS[event]
+    const fn = (options as any)[eventName]
+    const once = event !== 'progress'
 
-      if (fn) registerListener({ req, event, fn, once })
-    })
+    if (fn) registerListener({ req, event, fn, once })
+  })
+}
+
+export function captureErrors (req: XMLHttpRequest, options: IProgressOptions) {
+  req.onreadystatechange = (event: Event): void => {
+    if (req.readyState !== 4 || req.status === 200) return;
+
+    if (options && options.errorFn) options.errorFn(event)
+  }
 }

@@ -1,19 +1,18 @@
 import { IProgressOptions } from './types'
-import { registerListeners } from './utils'
+import { captureErrors, registerListeners } from './utils'
 
 function progress (options: IProgressOptions): XMLHttpRequest | null {
   if (!options.file) return null;
 
-  let req = new XMLHttpRequest();
+  let req: XMLHttpRequest = new XMLHttpRequest();
 
-  // register event listeners
+  captureErrors(req, options);
   registerListeners(req, options);
 
-  let formData = new FormData();
+  let formData: FormData = new FormData();
   formData.append('file', options.file!);
 
   req.open('post', options.url, true);
-  req.setRequestHeader("Content-type", "multipart/form-data");
   req.send(formData);
 
   return req;
