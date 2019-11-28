@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <div v-if="isUploading">
-      <span>progress is: {{ progress }}</span>
-      <button @click="$abortRequest">abort</button>
-    </div>
+    <!-- <div v-if="isUploading"> -->
+      <!-- <pre v-for="(x, index) in progress" :key="index">
+        progress: {{ x }}
+      </pre> -->
 
-    <span>hasError: {{ hasError }}</span>
+      <button @click="$abortRequest">abort</button>
+    <!-- </div> -->
+
+    <!-- <span>hasError: {{ hasError }}</span> -->
 
     <form enctype="multipart/form-data" method="post" name="fileinfo">
       <input type="file" multiple @change="setFile">
@@ -33,7 +36,7 @@ export default Vue.extend({
     setFile (event: Event): void {
       const files = (event.target as HTMLInputElement).files
 
-      if (files && files.length) this.file = files[0]
+      if (files && files.length) this.$setFiles(files)
     }
   }
 });

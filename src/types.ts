@@ -1,13 +1,21 @@
 type XMLEvent = (event: Event) => void
-type XMLProgressEvent = (event: ProgressEvent) => void | null
+type XMLProgressEvent = (event: ProgressEvent, id: number) => void | null
 
 export type TypeEvents = {
   [key: string]: string;
 }
 
+export interface IData {
+  error: string,
+  progress: number,
+  data: File | null,
+  uploading: boolean,
+  requests: XMLHttpRequest | null
+}
+
 export interface IMixinProps {
   url: string,
-  headers: object
+  headers?: object
 }
 
 export interface IListenerOptions {

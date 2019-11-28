@@ -1,26 +1,27 @@
 import Vue from 'vue'
-import { IMixinProps } from './types'
+import { IMixinProps, IData } from './types'
+import { createFiles, getUniqueId } from './utils'
 import progress from './progress'
 
 const VueCoeProgress = (params: IMixinProps) => Vue.extend({
   data () {
     return {
-      progress: 0 as number,
-      file: null as File | null,
-      hasError: false as boolean,
-      isUploading: false as boolean,
-      request: null as XMLHttpRequest | null
+      files: {} as any
     }
   },
 
   methods: {
+    $setFiles (data: FileList | File) {
+      if (data instanceof FileList) this.files = createFiles(data)
+    },
+
     _handleStart (): void {
-      this.isUploading = true
+      // this.isUploading = true
     },
 
     _handleError (): void {
       this._reset()
-      this.hasError = true
+      // this.hasError = true
     },
 
     _handleAbort (): void {
@@ -28,43 +29,49 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
     },
 
     _handleFinish (): void {
-      this._reset()
+      // this._reset()
     },
 
-    _handleProgress (event: ProgressEvent): void {
+    _handleProgress (event: ProgressEvent, id: number): void {
       if (!event.lengthComputable) return
 
-      const percent = event.loaded / event.total * 100
-
-      this.progress = percent
-
-      if (percent === 100) return
+      // this.progress[id] = +(event.loaded / event.total * 100).toFixed(0)
     },
 
     _reset (): void {
-      this.progress = 0
-      this.request = null
-      this.isUploading = false
+      // this.files = null
+      // this.progress = {}
+      // this.requests = null
+      // this.isUploading = false
     },
 
     $abortRequest (): void {
-      if (!this.request) return
+      // if (!this.requests) return
 
-      this.request.abort()
-      this._reset()
+      // this.requests.abort()
+      //this._reset()
     },
 
     $upload (): void {
-      this.request = progress({
-        url: params.url,
-        file: this.file,
-        headers: params.headers,
-        abortFn: this._handleAbort,
-        errorFn: this._handleError,
-        loadendFn: this._handleFinish,
-        loadstartFn: this._handleStart,
-        progressFn: this._handleProgress
-      })
+      if (!this.files) return
+
+      // Array.from(this.files).forEach(file => {
+      //   const id = getUniqueId()
+
+      //   const xhr = progress({
+      //     file,
+      //     url: params.url,
+      //     headers: params.headers,
+      //     abortFn: this._handleAbort,
+      //     errorFn: this._handleError,
+      //     loadendFn: this._handleFinish,
+      //     loadstartFn: this._handleStart,
+      //     progressFn: this._handleProgress
+      //   }, id)
+
+      //   this.progress = { ...this.progress, [id]: 0 }
+      //   this.requests = { ...this.requests, [id]: xhr }
+      // })
     }
   }
 })

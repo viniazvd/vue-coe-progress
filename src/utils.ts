@@ -8,22 +8,43 @@ const EVENTS: TypeEvents = {
   loadstart: 'loadstartFn',
 }
 
+export function createFiles (data: any) {
+  return Array
+    .from(data)
+    .reduce((acc, file) => {
+      const id = getUniqueId()
+
+      acc = {
+        ...acc,
+        [id]: {
+          error: '',
+          progress: 0,
+          data: file,
+          uploading: false,
+          requests: null
+        }
+      }
+
+      return acc
+    }, {})
+}
+
 function registerListener (options: IListenerOptions): void {
   if (options.fn) {
     options.req.upload.addEventListener(options.event, options.fn, { once: options.once })
   }
 }
 
-export function registerListeners (req: XMLHttpRequest, options: IProgressOptions): void {
+export function registerListeners (id: number, req: XMLHttpRequest, options: IProgressOptions): void {
   Object
-  .keys(EVENTS)
-  .forEach(event => {
-    const eventName = EVENTS[event]
-    const fn = (options as any)[eventName]
-    const once = event !== 'progress'
+    .keys(EVENTS)
+    .forEach(event => {
+      const eventName = EVENTS[event]
+      const fn = (options as any)[eventName]
+      const once = event !== 'progress'
 
-    if (fn) registerListener({ req, event, fn, once })
-  })
+      if (fn) registerListener({ req, event, fn: (event: Event) => fn(event, id), once })
+    })
 }
 
 export function captureErrors (req: XMLHttpRequest, options: IProgressOptions) {
@@ -42,4 +63,8 @@ export function setHeaders (req: XMLHttpRequest, options: IProgressOptions) {
       .entries(headers)
       .forEach(([ key, value ]) => req.setRequestHeader(key, value))
   }
+}
+
+export function getUniqueId (): number {
+  return +(Date.now() + Math.random()).toFixed(0)
 }
