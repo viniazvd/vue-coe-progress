@@ -4,8 +4,9 @@ import progress from './progress'
 const VueCoeProgress = (url: string) => Vue.extend({
   data () {
     return {
-      progress: 0,
+      progress: 0 as number,
       file: null as File | null,
+      hasError: false as boolean,
       isUploading: false as boolean,
       request: null as XMLHttpRequest | null
     }
@@ -18,12 +19,12 @@ const VueCoeProgress = (url: string) => Vue.extend({
 
     _handleError (): void {
       this._reset()
+      this.hasError = true
     },
 
     _handleAbort (): void {
       this._reset()
     },
-
 
     _handleFinish (): void {
       this._reset()
@@ -52,7 +53,7 @@ const VueCoeProgress = (url: string) => Vue.extend({
       this._reset()
     },
 
-    $submit (): void {
+    $upload (): void {
       this.request = progress({
         url,
         file: this.file,
