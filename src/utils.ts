@@ -20,8 +20,8 @@ export function registerListeners (req: XMLHttpRequest, options: IProgressOption
     .forEach(event => {
       const eventName = EVENTS[event]
       const fn = (options as any)[eventName]
-      const isOnce = event !== 'progress'
+      const once = event !== 'progress'
 
-      if (fn) registerListener({ req, event, fn, isOnce })
+      if (fn) registerListener({ req, event, fn, once })
     })
 }
