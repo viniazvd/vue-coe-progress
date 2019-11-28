@@ -1,5 +1,5 @@
 import { IProgressOptions } from './types'
-import { captureErrors, registerListeners } from './utils'
+import { captureErrors, registerListeners, setHeaders } from './utils'
 
 function progress (options: IProgressOptions): XMLHttpRequest | null {
   if (!options.file) return null;
@@ -13,6 +13,7 @@ function progress (options: IProgressOptions): XMLHttpRequest | null {
   formData.append('file', options.file!);
 
   req.open('post', options.url, true);
+  setHeaders(req, options)
   req.send(formData);
 
   return req;
