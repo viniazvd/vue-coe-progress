@@ -1,7 +1,8 @@
 import Vue from 'vue'
+import { IMixinProps } from './types'
 import progress from './progress'
 
-const VueCoeProgress = (url: string) => Vue.extend({
+const VueCoeProgress = (params: IMixinProps) => Vue.extend({
   data () {
     return {
       progress: 0 as number,
@@ -55,8 +56,9 @@ const VueCoeProgress = (url: string) => Vue.extend({
 
     $upload (): void {
       this.request = progress({
-        url,
+        url: params.url,
         file: this.file,
+        headers: params.headers,
         abortFn: this._handleAbort,
         errorFn: this._handleError,
         loadendFn: this._handleFinish,
