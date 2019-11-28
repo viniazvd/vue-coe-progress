@@ -22,7 +22,12 @@ import VueCoeProgress from './VueCoeProgress'
 export default Vue.extend({
   name: 'app',
 
-  mixins: [ VueCoeProgress('http://localhost:3000/') ],
+  mixins: [
+    VueCoeProgress({
+      url: 'http://localhost:3000/',
+      headers: { 'Authorization': 'Basic 48120481204120h08fhw' }
+    })
+  ],
 
   methods: {
     setFile (event: Event): void {
