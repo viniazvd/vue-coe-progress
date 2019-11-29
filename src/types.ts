@@ -28,7 +28,6 @@ export interface IListenerOptions {
   fn: (event: Event) => (id: string, event: Event) => void
 }
 
-// TODO: remove any type on errorFn
 export interface IProgressOptions {
   url: string,
   headers?: object,
