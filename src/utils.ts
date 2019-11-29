@@ -8,7 +8,7 @@ const EVENTS: TypeEvents = {
   loadstart: 'loadstartFn',
 }
 
-export function createFiles (data: any) {
+export function createFiles (data: FileList) {
   return Array
     .from(data)
     .reduce((acc, file) => {
@@ -18,10 +18,12 @@ export function createFiles (data: any) {
         ...acc,
         [id]: {
           error: '',
-          progress: 0,
           data: file,
+          progress: 0,
+          done: false,
+          request: null,
+          aborted: false,
           uploading: false,
-          requests: null
         }
       }
 
@@ -35,7 +37,7 @@ function registerListener (options: IListenerOptions): void {
   }
 }
 
-export function registerListeners (id: number, req: XMLHttpRequest, options: IProgressOptions): void {
+export function registerListeners (id: string, req: XMLHttpRequest, options: IProgressOptions): void {
   Object
     .keys(EVENTS)
     .forEach(event => {
@@ -43,15 +45,15 @@ export function registerListeners (id: number, req: XMLHttpRequest, options: IPr
       const fn = (options as any)[eventName]
       const once = event !== 'progress'
 
-      if (fn) registerListener({ req, event, fn: (event: Event) => fn(event, id), once })
+      if (fn) registerListener({ req, event, fn: (event: Event) => fn(id, event), once })
     })
 }
 
-export function captureErrors (req: XMLHttpRequest, options: IProgressOptions) {
+export function captureErrors (id: string, req: XMLHttpRequest, options: IProgressOptions) {
   req.onreadystatechange = (event: Event): void => {
     if (req.readyState !== 4 || req.status === 200) return;
 
-    if (options && options.errorFn) options.errorFn(event)
+    if (options && options.errorFn) options.errorFn(id, req.responseText, event)
   }
 }
 
@@ -66,8 +68,7 @@ export function setHeaders (req: XMLHttpRequest, options: IProgressOptions) {
 }
 
 export function getUniqueId (): number {
-  return +(Date.now() + Math.random())
-    .toFixed(3)
-    .toString()
-    .replace('.', '')
+  const n = Date.now() + Math.random()
+
+  return +(n.toFixed(3).toString().replace('.', ''))
 }
