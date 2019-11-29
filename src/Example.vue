@@ -10,11 +10,9 @@
       <span>uploading: {{ file.uploading }}</span>
     </pre>
 
-    <form enctype="multipart/form-data" method="post" name="fileinfo">
-      <input type="file" multiple @change="setFile">
+    <input type="file" multiple @change="setFile">
 
-      <button @click.prevent="$upload">submit</button>
-    </form>
+    <button @click.prevent="$upload">submit</button>
   </div>
 </template>
 
