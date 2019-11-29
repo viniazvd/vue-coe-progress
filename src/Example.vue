@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <!-- <div v-if="isUploading"> -->
-      <!-- <pre v-for="(x, index) in progress" :key="index">
-        progress: {{ x }}
-      </pre> -->
+    <pre v-for="file in $fileList" :key="file.id">
+      <button @click="$abortRequest(file.id)">abort</button>
 
-      <button @click="$abortRequest">abort</button>
-    <!-- </div> -->
-
-    <!-- <span>hasError: {{ hasError }}</span> -->
+      <span>done: {{ file.done }}</span>
+      <span>error: {{ file.error }}</span>
+      <span>aborted: {{ file.aborted }}</span>
+      <span>progress: {{ file.progress }}</span>
+      <span>uploading: {{ file.uploading }}</span>
+    </pre>
 
     <form enctype="multipart/form-data" method="post" name="fileinfo">
       <input type="file" multiple @change="setFile">
