@@ -66,5 +66,8 @@ export function setHeaders (req: XMLHttpRequest, options: IProgressOptions) {
 }
 
 export function getUniqueId (): number {
-  return +(Date.now() + Math.random()).toFixed(0)
+  return +(Date.now() + Math.random())
+    .toFixed(3)
+    .toString()
+    .replace('.', '')
 }
