@@ -127,8 +127,8 @@ Name            | Params
 $setFiles       | data: FileList                            
 $upload         | -                                         
 $abortRequest   | id: string                                
-$handleStart    | id: string, event: event                  
-$handleFinish   | id: string, event: event                  
+$handleStart    | id: string, event: Event                  
+$handleFinish   | id: string, event: Event                  
 $handleProgress | id: string, event: ProgressEvent          
 $handleError    | id: string, message: string, event: Event 
 
