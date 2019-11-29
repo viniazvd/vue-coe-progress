@@ -26,7 +26,7 @@ export default Vue.extend({
   mixins: [
     VueCoeProgress({
       url: 'http://localhost:3000/',
-      headers: { 'Authorization': 'Basic 48120481204120h08fhw' }
+      headers: { 'Authorization': 'Basic 48120481204120h08fhwzw' }
     })
   ],
 
