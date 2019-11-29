@@ -1,77 +1,76 @@
 import Vue from 'vue'
-import { IMixinProps, IData } from './types'
-import { createFiles, getUniqueId } from './utils'
 import progress from './progress'
+import { createFiles } from './utils'
+import { IMixinProps, IData } from './types'
 
 const VueCoeProgress = (params: IMixinProps) => Vue.extend({
   data () {
     return {
-      files: {} as any
+      files: {} as { [key: string]: IData }
+    }
+  },
+
+  computed: {
+    $fileList (): object {
+      if (!this.files) return []
+
+      return Object
+        .entries(this.files)
+        .map(([ id, file ]) => ({ id, ...file }))
     }
   },
 
   methods: {
-    $setFiles (data: FileList | File) {
-      if (data instanceof FileList) this.files = createFiles(data)
+    _getXHR (id: string, file: IData) {
+      return progress({
+        file: file.data,
+        url: params.url,
+        headers: params.headers,
+        errorFn: this.$handleError,
+        loadendFn: this.$handleFinish,
+        loadstartFn: this.$handleStart,
+        progressFn: this.$handleProgress
+      }, id)
     },
 
-    _handleStart (): void {
-      // this.isUploading = true
+    $setFiles (data: FileList): void {
+      const isFileList = data instanceof FileList
+
+      if (!isFileList) return
+
+      (this.files as any) = createFiles(data)
     },
 
-    _handleError (): void {
-      this._reset()
-      // this.hasError = true
+    $handleStart (id: string): void {
+      this.files[id]['uploading'] = true
     },
 
-    _handleAbort (): void {
-      this._reset()
+    $handleError (id: string, message: string): void {
+      this.files[id]['error'] = message
     },
 
-    _handleFinish (): void {
-      // this._reset()
+    $handleFinish (id: string): void {
+      this.files[id]['done'] = true
+      this.files[id]['uploading'] = false
     },
 
-    _handleProgress (event: ProgressEvent, id: number): void {
+    $handleProgress (id: string, event: ProgressEvent): void {
       if (!event.lengthComputable) return
 
-      // this.progress[id] = +(event.loaded / event.total * 100).toFixed(0)
+      this.files[id]['progress'] = +(event.loaded / event.total * 100).toFixed(0)
     },
 
-    _reset (): void {
-      // this.files = null
-      // this.progress = {}
-      // this.requests = null
-      // this.isUploading = false
-    },
-
-    $abortRequest (): void {
-      // if (!this.requests) return
-
-      // this.requests.abort()
-      //this._reset()
+    $abortRequest (id: string): void {
+      this.files[id]['aborted'] = true
+      this.files[id]['request']!.abort()
     },
 
     $upload (): void {
       if (!this.files) return
 
-      // Array.from(this.files).forEach(file => {
-      //   const id = getUniqueId()
-
-      //   const xhr = progress({
-      //     file,
-      //     url: params.url,
-      //     headers: params.headers,
-      //     abortFn: this._handleAbort,
-      //     errorFn: this._handleError,
-      //     loadendFn: this._handleFinish,
-      //     loadstartFn: this._handleStart,
-      //     progressFn: this._handleProgress
-      //   }, id)
-
-      //   this.progress = { ...this.progress, [id]: 0 }
-      //   this.requests = { ...this.requests, [id]: xhr }
-      // })
+      Object
+        .entries(this.files)
+        .forEach(([ id, file ]) => this.files[id]['request'] = this._getXHR(id, file))
     }
   }
 })
