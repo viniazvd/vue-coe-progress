@@ -1,5 +1,6 @@
-type XMLEvent = (event: Event) => void
-type XMLProgressEvent = (event: ProgressEvent, id: number) => void | null
+type XMLEvent = (id: string, event: Event) => void
+type XMLErrorEvent = (id: string, message: string, event: Event) => void
+type XMLProgressEvent = (id: string, event: ProgressEvent) => void | null
 
 export type TypeEvents = {
   [key: string]: string;
@@ -7,10 +8,12 @@ export type TypeEvents = {
 
 export interface IData {
   error: string,
+  done: boolean,
   progress: number,
+  aborted: boolean,
   data: File | null,
   uploading: boolean,
-  requests: XMLHttpRequest | null
+  request: XMLHttpRequest | null
 }
 
 export interface IMixinProps {
@@ -30,9 +33,8 @@ export interface IProgressOptions {
   url: string,
   headers?: object,
   file: File | null,
-  abortFn?: XMLEvent,
-  errorFn?: XMLEvent,
   loadendFn?: XMLEvent,
   loadstartFn?: XMLEvent,
+  errorFn?: XMLErrorEvent,
   progressFn?: XMLProgressEvent
 }
