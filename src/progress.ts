@@ -1,12 +1,12 @@
 import { IProgressOptions } from './types'
 import { captureErrors, registerListeners, setHeaders } from './utils'
 
-function progress (options: IProgressOptions, id: number): XMLHttpRequest | null {
+function progress (options: IProgressOptions, id: string): XMLHttpRequest | null {
   if (!options.file) return null;
 
   let req: XMLHttpRequest = new XMLHttpRequest();
 
-  captureErrors(req, options);
+  captureErrors(id, req, options);
   registerListeners(id, req, options);
 
   let formData: FormData = new FormData();
