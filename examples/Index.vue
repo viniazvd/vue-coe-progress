@@ -17,9 +17,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueCoeProgress from 'vue-coe-progress'
-console.log(VueCoeProgress)
+import { VueCoeProgress } from '../dist/vue-coe-progress.cjs'
 
 export default {
   name: 'app',
