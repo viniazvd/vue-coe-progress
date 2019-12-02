@@ -30,8 +30,8 @@ export interface IListenerOptions {
 
 export interface IProgressOptions {
   url: string,
+  file: File | null | undefined,
   headers?: object,
-  file: File | null,
   loadendFn?: XMLEvent,
   loadstartFn?: XMLEvent,
   errorFn?: XMLErrorEvent,
