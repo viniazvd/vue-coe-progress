@@ -33,8 +33,8 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
       }, id)
     },
 
-    $setStates (file: File): IData {
-      return setStates(file)
+    $setStates (): IData {
+      return setStates()
     },
 
     $setFiles (data: FileList): void {
