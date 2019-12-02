@@ -2,20 +2,20 @@
   "name": "vue-coe-progress",
   "version": "0.1.0",
   "private": true,
+  "files": [ "dist/" ],
+  "license": "MIT",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "build": "bili"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-typescript": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
     "babel-core": "7.0.0-bridge.0",
-    "rollup-plugin-typescript2": "^0.25.2",
-    "typescript": "^3.4.3",
     "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   }
 }
