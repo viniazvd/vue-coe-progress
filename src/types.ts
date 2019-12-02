@@ -11,7 +11,7 @@ export interface IData {
   done: boolean,
   progress: number,
   aborted: boolean,
-  data: File | null,
+  data?: File | null,
   uploading: boolean,
   request: XMLHttpRequest | null
 }
