@@ -8,10 +8,9 @@ const EVENTS: TypeEvents = {
   loadstart: 'loadstartFn',
 }
 
-export function setStates (file: File): IData {
+export function setStates (): IData {
   return {
     error: '',
-    data: file,
     progress: 0,
     done: false,
     request: null,
@@ -26,7 +25,12 @@ export function createFiles (data: FileList): { [id: string]: IData } {
     .reduce((acc, file) => {
       const id = getUniqueId()
 
-      acc = Object.assign(acc, { [id]: setStates(file) })
+      acc = Object.assign(acc, {
+        [id]: {
+          data: file,
+          ...setStates()
+        }
+      })
 
       return acc
     }, {})
