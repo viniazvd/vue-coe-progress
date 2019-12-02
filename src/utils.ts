@@ -1,4 +1,4 @@
-import { TypeEvents, IListenerOptions, IProgressOptions } from './types'
+import { TypeEvents, IData, IListenerOptions, IProgressOptions } from './types'
 
 const EVENTS: TypeEvents = {
   abort: 'abortFn',
@@ -8,23 +8,25 @@ const EVENTS: TypeEvents = {
   loadstart: 'loadstartFn',
 }
 
-export function createFiles (data: FileList) {
+export function setStates (file: File): IData {
+  return {
+    error: '',
+    data: file,
+    progress: 0,
+    done: false,
+    request: null,
+    aborted: false,
+    uploading: false,
+  }
+}
+
+export function createFiles (data: FileList): { [id: string]: IData } {
   return Array
     .from(data)
     .reduce((acc, file) => {
       const id = getUniqueId()
 
-      acc = Object.assign(acc, {
-        [id]: {
-          error: '',
-          data: file,
-          progress: 0,
-          done: false,
-          request: null,
-          aborted: false,
-          uploading: false,
-        }
-      })
+      acc = Object.assign(acc, { [id]: setStates(file) })
 
       return acc
     }, {})
