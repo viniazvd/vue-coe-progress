@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import progress from './progress'
-import { createFiles } from './utils'
+import { createFiles, setStates } from './utils'
 import { IMixinProps, IData } from './types'
 
 const VueCoeProgress = (params: IMixinProps) => Vue.extend({
@@ -31,6 +31,10 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
         loadstartFn: this.$handleStart,
         progressFn: this.$handleProgress
       }, id)
+    },
+
+    $setStates (file: File): IData {
+      return setStates(file)
     },
 
     $setFiles (data: FileList): void {
