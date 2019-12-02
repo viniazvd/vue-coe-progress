@@ -14,8 +14,7 @@ export function createFiles (data: FileList) {
     .reduce((acc, file) => {
       const id = getUniqueId()
 
-      acc = {
-        ...acc,
+      acc = Object.assign(acc, {
         [id]: {
           error: '',
           data: file,
@@ -25,7 +24,7 @@ export function createFiles (data: FileList) {
           aborted: false,
           uploading: false,
         }
-      }
+      })
 
       return acc
     }, {})
