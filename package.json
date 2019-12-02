@@ -1,8 +1,14 @@
 {
   "name": "vue-coe-progress",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "files": [ "dist/" ],
   "main": "dist/vue-coe-progress.cjs.js",
+  "cdn": "dist/vue-coe-progress.umd.js",
+  "types": "types/vue-coe-progress.d.ts",
+  "unpkg": "dist/vue-coe-progress.umd.js",
+  "module": "dist/vue-coe-progress.esm.js",
+  "jsdelivr": "dist/vue-coe-progress.umd.js",
+  "umd:main": "dist/vue-coe-progress.umd.js",
   "license": "MIT",
   "scripts": {
     "build": "bili"
