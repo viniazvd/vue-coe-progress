@@ -50,9 +50,11 @@ export function registerListeners (id: string, req: XMLHttpRequest, options: IPr
     })
 }
 
+const VALID_EVENTS = [ 200, 201 ]
+
 export function captureErrors (id: string, req: XMLHttpRequest, options: IProgressOptions) {
   req.onreadystatechange = (event: Event): void => {
-    if (req.readyState !== 4 || req.status === 200) return;
+    if (req.readyState !== 4 || VALID_EVENTS.includes(req.status)) return;
 
     if (options && options.errorFn) options.errorFn(id, req.responseText, event)
   }
