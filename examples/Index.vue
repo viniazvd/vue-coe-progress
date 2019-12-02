@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import VueCoeProgress from './VueCoeProgress'
+import Vue, { VueConstructor } from 'vue'
+import VueCoeProgress from '../src/VueCoeProgress'
 
-export default Vue.extend({
+export default (Vue as VueConstructor<any>).extend({
   name: 'app',
 
   mixins: [
