@@ -1,6 +1,1 @@
-import Vue from 'vue';
-import Example from './Example.vue';
-
-Vue.config.productionTip = false;
-
-new Vue({ render: h => h(Example) }).$mount('#app');
+// https://github.com/vuejs/vue-cli/issues/2934#issuecomment-496923845
