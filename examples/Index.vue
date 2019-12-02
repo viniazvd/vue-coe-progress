@@ -16,26 +16,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue, { VueConstructor } from 'vue'
-import VueCoeProgress from '../src/VueCoeProgress'
+<script>
+import Vue from 'vue'
+import VueCoeProgress from 'vue-coe-progress'
+console.log(VueCoeProgress)
 
-export default (Vue as VueConstructor<any>).extend({
+export default {
   name: 'app',
 
   mixins: [
-    VueCoeProgress({
-      url: 'http://localhost:3000/',
-      headers: { 'Authorization': 'Basic 48120481204120h08fhwzw' }
+      VueCoeProgress({
+        url: 'http://localhost:3000/',
+        headers: { 'Authorization': 'Basic 48120481204120h08fhwzw' }
     })
   ],
 
   methods: {
-    setFile (event: Event): void {
-      const files = (event.target as HTMLInputElement).files
+    setFile (event) {
+      const files = event.target.files
 
       if (files && files.length) this.$setFiles(files)
     }
   }
-});
+};
 </script>
