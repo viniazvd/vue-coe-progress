@@ -1,7 +1,5 @@
-/**
- * Bili's configuration object.
- * @type {import('bili').Config}
- */
+// const typescript = require('rollup-plugin-typescript2')
+
 module.exports = {
   input: 'src/index.ts',
   banner: true,
@@ -10,11 +8,11 @@ module.exports = {
     format: ['es', 'cjs', 'umd', 'umd-min'],
     moduleName: 'VueCoeProgress',
   },
-  plugins: {
-    typescript2: {
-      clean: true,
-      verbosity: 0,
-      useTsconfigDeclarationDir: true
-    }
-  }
+  // plugins: [
+  //   typescript({
+  //     clean: true,
+  //     verbosity: 0,
+  //     useTsconfigDeclarationDir: true
+  //   })
+  // ]
 }
