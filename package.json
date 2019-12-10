@@ -1,6 +1,6 @@
 {
   "name": "vue-coe-progress",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "files": [
     "dist/"
   ],
@@ -26,13 +26,13 @@
     "autoprefixer": "^9.4.3",
     "babel-core": "^7.0.0-bridge",
     "babel-loader": "^8.0.6",
+    "bili": "^4.8.1",
     "poi": "^12.1.6",
     "rollup-plugin-typescript2": "^0.24.3",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4",
     "vue": "^2.6.10",
-    "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.41.2"
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {}
 }
