@@ -74,8 +74,9 @@ $fileList  |  Array  |   `[]`     | mapped file list
 
 Name            | Params                                    
 --------------- | ----------------------------------------- 
-$setFiles       | data: FileList                            
-$upload         | -                                         
+$setStates      | -                            
+$upload         | -
+$setFiles       | data: FileList
 $abortRequest   | id: string                                
 $handleStart    | id: string, event: Event                  
 $handleFinish   | id: string, event: Event                  
