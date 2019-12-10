@@ -21,10 +21,10 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
   },
 
   methods: {
-    _getXHR (id: string, file: IData) {
+    _getXHR (id: string, file: IData, endpoint: string) {
       return progress({
         file: file.data,
-        url: params.url,
+        url: endpoint || params.url,
         headers: params.headers,
         errorFn: this.$handleError,
         loadendFn: this.$handleFinish,
@@ -69,12 +69,12 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
       this.files[id]['request']!.abort()
     },
 
-    $upload (): void {
+    $upload (endpoint): void {
       if (!this.files) return
 
       Object
         .entries(this.files)
-        .forEach(([ id, file ]) => this.files[id]['request'] = this._getXHR(id, file))
+        .forEach(([ id, file ]) => this.files[id]['request'] = this._getXHR(id, file, endpoint))
     }
   }
 })
