@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { VueCoeProgress } from '../dist/vue-coe-progress.cjs'
+import { VueCoeProgress } from '../dist/index'
 
 export default {
   name: 'app',

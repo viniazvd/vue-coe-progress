@@ -38,7 +38,11 @@ export function createFiles (data: FileList): { [id: string]: IData } {
 
 function registerListener (options: IListenerOptions): void {
   if (options.fn) {
-    options.req.upload.addEventListener(options.event, options.fn, { once: options.once })
+    const req = options.event === 'progress' ? options.req.upload : options.req
+
+    req.addEventListener(options.event, options.fn, {
+      once: options.once
+    })
   }
 }
 
