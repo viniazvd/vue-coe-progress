@@ -51,6 +51,7 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
     },
 
     $handleError (id: string, message: string): void {
+      this.files[id]['done'] = true
       this.files[id]['error'] = message
     },
 
@@ -66,6 +67,7 @@ const VueCoeProgress = (params: IMixinProps) => Vue.extend({
     },
 
     $abortRequest (id: string): void {
+      this.files[id]['done'] = true
       this.files[id]['aborted'] = true
       this.files[id]['request']!.abort()
     },
