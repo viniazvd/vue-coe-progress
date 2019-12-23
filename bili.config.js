@@ -5,8 +5,13 @@ module.exports = {
   banner: true,
   externals: ['vue'],
   output: {
-    format: ['es', 'cjs', 'umd', 'umd-min'],
-    moduleName: 'VueCoeProgress',
+    format: [
+      'es',
+      'cjs',
+      'umd',
+      'umd-min'
+    ],
+      moduleName: 'VueCoeProgress',
   },
   // plugins: [
   //   typescript({
